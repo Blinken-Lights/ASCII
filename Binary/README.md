@@ -1,6 +1,6 @@
 # Binary
 
-This module is a 1V/Oct CV generator that takes several gate inputs and spits out 1V/Oct CV quantised by several choices of scale.
+This module is a 1V/Oct CV generator (max 5.33V) that takes several gate inputs and spits out 1V/Oct CV quantised by several choices of scale.
 
 It's split into 2 identical channels. Each channel takes 6 gates, split into 3 for 'note' and 3 for 'octave'. Each group of 3 are combined as binary digits to derive a number from 0-7. The 'note' number corresponds to a degree on a scale. The 'octave' number.. defines the octave :)
 
