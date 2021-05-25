@@ -1,1 +1,1 @@
-KiCad and gerber files
+KiCad files
