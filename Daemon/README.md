@@ -28,5 +28,6 @@ Possible applications (of which I have coded NONE so far!) are:
 - Bernoulli Gate
 - Sample and Hold
 - Envelope Generator .. EG voltage controlled AR or AD
+- Clock Divider / Multiplier with 2 voltage controlled divisions from one clock input
 
 This repo contains BOM and part position files that should be compatible with JLCPCB.
