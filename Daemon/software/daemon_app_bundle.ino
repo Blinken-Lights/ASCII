@@ -54,6 +54,8 @@ byte euclidean_clock = 0;
 byte euclidean[4]; // stores 32 bits in 4 bytes
 byte prev_dv = 0;
 byte prev_len = 0;
+byte voct = 0;
+byte prev_voct = 0;
 
 void setup() {
 
@@ -326,10 +328,12 @@ void quantiser_loop(){
     byte scale = analogRead(3) >> 7; // 0 - 7
     byte note = quantise_note(analogRead(1));
     byte scale_note = to_scale(note, scale);
-    OCR0B = to_analogue(analogRead(1));
-    OCR0A = 255;
+    prev_voct = voct;
+    voct = to_analogue(scale_note);
+    OCR0A = voct;
+    OCR0B = prev_voct;
   }else if(fall_trig()){
-    OCR0A = 0;
+    
   }
   prev_cvj3_state = cvj3_state;
 }
