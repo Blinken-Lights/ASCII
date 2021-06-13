@@ -335,7 +335,6 @@ void quantiser_loop(){
   }else if(fall_trig()){
     
   }
-  prev_cvj3_state = cvj3_state;
 }
 
 // TURING
