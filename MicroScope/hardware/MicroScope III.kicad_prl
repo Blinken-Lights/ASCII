@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 37,
+    "active_layer": 31,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_nets": [],
@@ -63,8 +63,8 @@
       35,
       36
     ],
-    "visible_layers": "ffebfab_7fffffff",
-    "zone_display_mode": 0
+    "visible_layers": "ffdffdf_ffffffff",
+    "zone_display_mode": 1
   },
   "meta": {
     "filename": "MicroScope III.kicad_prl",
