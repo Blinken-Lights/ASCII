@@ -1,1 +1,1 @@
-Software for the MicroScope - incomplete, but functional!
+MicroScope firmware completed. User manual PDF is included in this folder.
