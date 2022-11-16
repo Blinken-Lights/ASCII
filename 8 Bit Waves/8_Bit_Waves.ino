@@ -1,7 +1,7 @@
 /*
- * Final version of 8 Bit Waves Redesign 2022
+ * 8 Bit Waves Redesign 2022
  * with LFO mode
- * 
+ * V1.0
  */
 
 #include <EEPROM.h>
