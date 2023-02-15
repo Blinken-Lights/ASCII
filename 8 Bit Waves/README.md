@@ -1,6 +1,6 @@
 8 Bit Waves demo video on YouTube:
 
-[![Watch the video](https://img.youtube.com/vi/U-qV25_QwbY/0.jpg)](https://youtu.be/U-qV25_QwbY)
+[![Watch the video](https://img.youtube.com/vi/4Gtv8fqUfjQ/0.jpg)](https://youtu.be/4Gtv8fqUfjQ)
 
 8 Bit Waves build video on YouTube:
 
