@@ -1,7 +1,7 @@
 /*
 * For Pi Pico 2
-* CPU Speed: 250MHz (Overclock)
-* Optimize: Optimize Even More (-O3)
+* //CPU Speed: 250MHz (Overclock)
+* //Optimize: Optimize Even More (-O3)
 */
 #include <SPI.h>
 #include "Ucglib.h"
