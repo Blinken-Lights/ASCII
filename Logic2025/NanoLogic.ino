@@ -1,3 +1,7 @@
+byte inputTypeSelectorPin = 0;
+bool inputType = false; // true = 2 inputs plus CV, false = 3 inputs and no CV
+//bool prevInputType = false;
+
 int maxLogicModes = 5;
 byte logicModes[] = { 0, 0, 0, 0 };
 
@@ -24,6 +28,12 @@ byte outputPins[] = {
 void setup() {
 
   //Serial.begin(250000);
+
+  pinMode(inputTypeSelectorPin, INPUT_PULLUP);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
 
   for(int i = 0; i < 4; i++){
     for(int j = 0; j < 2; j++){
@@ -52,89 +62,179 @@ void setup() {
 ISR(TIMER0_COMPA_vect){
 
   // 0 = AND, 1 = OR, 2 = XOR, 3 = NAND, 4 = NOR, 5 = XNOR
-  
-  switch (logicModes[0]){
-    case 0:
-      bitWrite(PORTB, 3, bitRead(PINB, 5) & bitRead(PINB, 4));
-    break;
-    case 1:
-      bitWrite(PORTB, 3, bitRead(PINB, 5) | bitRead(PINB, 4));
-    break;
-    case 2:
-      bitWrite(PORTB, 3, bitRead(PINB, 5) ^ bitRead(PINB, 4));
-    break;
-    case 3:
-      bitWrite(PORTB, 3, !(bitRead(PINB, 5) & bitRead(PINB, 4)));
-    break;
-    case 4:
-      bitWrite(PORTB, 3, !(bitRead(PINB, 5) | bitRead(PINB, 4)));
-    break;
-    case 5:
-      bitWrite(PORTB, 3, !(bitRead(PINB, 5) ^ bitRead(PINB, 4)));
-    break;
-  }
 
-  switch (logicModes[1]){
-    case 0:
-      bitWrite(PORTB, 0, bitRead(PINB, 1) & bitRead(PINB, 2));
-    break;
-    case 1:
-      bitWrite(PORTB, 0, bitRead(PINB, 1) | bitRead(PINB, 2));
-    break;
-    case 2:
-      bitWrite(PORTB, 0, bitRead(PINB, 1) ^ bitRead(PINB, 2));
-    break;
-    case 3:
-      bitWrite(PORTB, 0, !(bitRead(PINB, 1) & bitRead(PINB, 2)));
-    break;
-    case 4:
-      bitWrite(PORTB, 0, !(bitRead(PINB, 1) | bitRead(PINB, 2)));
-    break;
-    case 5:
-      bitWrite(PORTB, 0, !(bitRead(PINB, 1) ^ bitRead(PINB, 2)));
-    break;
-  }
+  if(inputType){
 
-  switch (logicModes[2]){
-    case 0:
-      bitWrite(PORTD, 5, bitRead(PIND, 6) & bitRead(PIND, 7));
-    break;
-    case 1:
-      bitWrite(PORTD, 5, bitRead(PIND, 6) | bitRead(PIND, 7));
-    break;
-    case 2:
-      bitWrite(PORTD, 5, bitRead(PIND, 6) ^ bitRead(PIND, 7));
-    break;
-    case 3:
-      bitWrite(PORTD, 5, !(bitRead(PIND, 6) & bitRead(PIND, 7)));
-    break;
-    case 4:
-      bitWrite(PORTD, 5, !(bitRead(PIND, 6) | bitRead(PIND, 7)));
-    break;
-    case 5:
-      bitWrite(PORTD, 5, !(bitRead(PIND, 6) ^ bitRead(PIND, 7)));
-    break;
-  }
+    switch (logicModes[0]){
+      case 0:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) & bitRead(PINB, 4));
+      break;
+      case 1:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) | bitRead(PINB, 4));
+      break;
+      case 2:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) ^ bitRead(PINB, 4));
+      break;
+      case 3:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) & bitRead(PINB, 4)));
+      break;
+      case 4:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) | bitRead(PINB, 4)));
+      break;
+      case 5:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) ^ bitRead(PINB, 4)));
+      break;
+    }
 
-  switch (logicModes[2]){
-    case 0:
-      bitWrite(PORTD, 2, bitRead(PIND, 3) & bitRead(PIND, 4));
-    break;
-    case 1:
-      bitWrite(PORTD, 2, bitRead(PIND, 3) | bitRead(PIND, 4));
-    break;
-    case 2:
-      bitWrite(PORTD, 2, bitRead(PIND, 3) ^ bitRead(PIND, 4));
-    break;
-    case 3:
-      bitWrite(PORTD, 2, !(bitRead(PIND, 3) & bitRead(PIND, 4)));
-    break;
-    case 4:
-      bitWrite(PORTD, 2, !(bitRead(PIND, 3) | bitRead(PIND, 4)));
-    break;
-    case 5:
-      bitWrite(PORTD, 2, !(bitRead(PIND, 3) ^ bitRead(PIND, 4)));
-    break;
+    switch (logicModes[1]){
+      case 0:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) & bitRead(PINB, 2));
+      break;
+      case 1:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) | bitRead(PINB, 2));
+      break;
+      case 2:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) ^ bitRead(PINB, 2));
+      break;
+      case 3:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) & bitRead(PINB, 2)));
+      break;
+      case 4:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) | bitRead(PINB, 2)));
+      break;
+      case 5:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) ^ bitRead(PINB, 2)));
+      break;
+    }
+
+    switch (logicModes[2]){
+      case 0:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) & bitRead(PIND, 7));
+      break;
+      case 1:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) | bitRead(PIND, 7));
+      break;
+      case 2:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) ^ bitRead(PIND, 7));
+      break;
+      case 3:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) & bitRead(PIND, 7)));
+      break;
+      case 4:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) | bitRead(PIND, 7)));
+      break;
+      case 5:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) ^ bitRead(PIND, 7)));
+      break;
+    }
+
+    switch (logicModes[3]){
+      case 0:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) & bitRead(PIND, 4));
+      break;
+      case 1:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) | bitRead(PIND, 4));
+      break;
+      case 2:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) ^ bitRead(PIND, 4));
+      break;
+      case 3:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) & bitRead(PIND, 4)));
+      break;
+      case 4:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) | bitRead(PIND, 4)));
+      break;
+      case 5:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) ^ bitRead(PIND, 4)));
+      break;
+    }
+
+  }else{
+
+    switch (logicModes[0]){
+      case 0:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) & bitRead(PINB, 4) & bitRead(PINC, 0));
+      break;
+      case 1:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) | bitRead(PINB, 4) | bitRead(PINC, 0));
+      break;
+      case 2:
+        bitWrite(PORTB, 3, bitRead(PINB, 5) ^ bitRead(PINB, 4) ^ bitRead(PINC, 0));
+      break;
+      case 3:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) & bitRead(PINB, 4) & bitRead(PINC, 0)));
+      break;
+      case 4:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) | bitRead(PINB, 4) | bitRead(PINC, 0)));
+      break;
+      case 5:
+        bitWrite(PORTB, 3, !(bitRead(PINB, 5) ^ bitRead(PINB, 4) ^ bitRead(PINC, 0)));
+      break;
+    }
+
+    switch (logicModes[1]){
+      case 0:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) & bitRead(PINB, 2) & bitRead(PINC, 1));
+      break;
+      case 1:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) | bitRead(PINB, 2) | bitRead(PINC, 1));
+      break;
+      case 2:
+        bitWrite(PORTB, 0, bitRead(PINB, 1) ^ bitRead(PINB, 2) ^ bitRead(PINC, 1));
+      break;
+      case 3:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) & bitRead(PINB, 2) & bitRead(PINC, 1)));
+      break;
+      case 4:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) | bitRead(PINB, 2) | bitRead(PINC, 1)));
+      break;
+      case 5:
+        bitWrite(PORTB, 0, !(bitRead(PINB, 1) ^ bitRead(PINB, 2) ^ bitRead(PINC, 1)));
+      break;
+    }
+
+    switch (logicModes[2]){
+      case 0:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) & bitRead(PIND, 7) & bitRead(PINC, 2));
+      break;
+      case 1:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) | bitRead(PIND, 7) | bitRead(PINC, 2));
+      break;
+      case 2:
+        bitWrite(PORTD, 5, bitRead(PIND, 6) ^ bitRead(PIND, 7) ^ bitRead(PINC, 2));
+      break;
+      case 3:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) & bitRead(PIND, 7) & bitRead(PINC, 2)));
+      break;
+      case 4:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) | bitRead(PIND, 7) | bitRead(PINC, 2)));
+      break;
+      case 5:
+        bitWrite(PORTD, 5, !(bitRead(PIND, 6) ^ bitRead(PIND, 7) ^ bitRead(PINC, 2)));
+      break;
+    }
+
+    switch (logicModes[3]){
+      case 0:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) & bitRead(PIND, 4) & bitRead(PINC, 3));
+      break;
+      case 1:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) | bitRead(PIND, 4) | bitRead(PINC, 3));
+      break;
+      case 2:
+        bitWrite(PORTD, 2, bitRead(PIND, 3) ^ bitRead(PIND, 4) ^ bitRead(PINC, 3));
+      break;
+      case 3:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) & bitRead(PIND, 4) & bitRead(PINC, 3)));
+      break;
+      case 4:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) | bitRead(PIND, 4) | bitRead(PINC, 3)));
+      break;
+      case 5:
+        bitWrite(PORTD, 2, !(bitRead(PIND, 3) ^ bitRead(PIND, 4) ^ bitRead(PINC, 3)));
+      break;
+    }
+
   }
 
 }
@@ -146,19 +246,30 @@ void loop() {
     analogueReadings[readAnaloguePin] = analogueReading;
     readAnaloguePin = readAnaloguePin % 4;
     byte newLogicMode = 0;
-    newLogicMode = round((analogueReadings[readAnaloguePin] + analogueReadings[readAnaloguePin + 4]) * 0.00488758553f);
-    if(newLogicMode > maxLogicModes){
-      newLogicMode = maxLogicModes;
+    if(!inputType){
+      newLogicMode = round(analogueReadings[readAnaloguePin + 4] * 0.00488758553f);
+    }else{
+      newLogicMode = round((analogueReadings[readAnaloguePin] + analogueReadings[readAnaloguePin + 4]) * 0.00488758553f);
     }
+    newLogicMode = newLogicMode % (maxLogicModes + 1);
     logicModes[readAnaloguePin] = newLogicMode;
-    //Serial.print(readAnaloguePin);
-    //Serial.print("\t");
-    //Serial.println(logicModes[readAnaloguePin]);
+    /*Serial.print(analogueReadings[readAnaloguePin]);
+    Serial.print("\t");
+    Serial.print(readAnaloguePin);
+    Serial.print("\t");
+    Serial.println(logicModes[readAnaloguePin]);*/
   }
   readAnaloguePin++;
   if(readAnaloguePin >= 8){
     readAnaloguePin = 0;
   }
+
+  inputType = opt_read(inputTypeSelectorPin);
+
+  //if(prevInputType != inputType){
+  // Serial.println(inputType ? "2 inputs" : "3 inputs");
+  //}
+  //prevInputType = inputType;
 
 }
 
